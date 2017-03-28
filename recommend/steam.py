@@ -33,6 +33,6 @@ class SteamAPI:
         return self._query(query)
 
     def ResolveVanityURL(self, vanityURL):
-        query = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={key}}&vanityurl={vanity}}'.format(key=self.key, vanity=vanityURL)
+        query = 'http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={key}}&vanityurl={vanity}'.format(key=self.key, vanity=vanityURL)
         return self._query(query)
 
