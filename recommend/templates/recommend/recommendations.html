@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>Steam Oracle</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		{% load static %}
+		<!--[if lte IE 8]><script src="{% static "recommend/assets/js/ie/html5shiv.js" %}"></script><![endif]-->
+		<link rel="stylesheet" href="{% static "recommend/assets/css/main.css" %}"/>
+		<!--[if lte IE 9]><link rel="stylesheet" href="{% static "recommend/assets/css/ie9.css"%}" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="{% static "recommend/assets/css/ie8.css"%}" /><![endif]-->
+	</head>
+	<body>	
+	<!-- Footer -->
+		<section id="footer">
+			<div class="inner">
+				<h2 class="major">Steam Oracle</h2>
+				<p>
+				Get recommendations tailored to you from the tastes of people you neither know nor care about!</p>
+				<p>
+				Below is a ranking of the unplayed games in your library. 
+				</p>
+				<ol>
+					{% for game in ordered_recommendation_list %}
+						<li><a href="steam://run/{{ game.steam_id }}/">{{ game.common_name }}</a></li>
+					{% endfor %}
+				</ol>
+				<ul class="copyright">
+					<li>&copy; David Buckley All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- Scripts -->
+		<script src="{% static "recommend/assets/js/skel.min.js" %}"></script>
+		<script src="{% static "recommend/assets/js/jquery.min.js" %}"></script>
+		<script src="{% static "recommend/assets/js/jquery.scrollex.min.js" %}"></script>
+		<script src="{% static "recommend/assets/js/util.js" %}"></script>
+		<!--[if lte IE 8]><script src="{% static "recommend/assets/js/ie/respond.min.js" %}"></script><![endif]-->
+		<script src="{% static "recommend/assets/js/main.js" %}"></script>
+	</body>
+</html>

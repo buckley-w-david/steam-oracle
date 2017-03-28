@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<title>Steam Oracle</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		{% load static %}
+		<!--[if lte IE 8]><script src="{% static "recommend/assets/js/ie/html5shiv.js" %}"></script><![endif]-->
+		<link rel="stylesheet" href="{% static "recommend/assets/css/main.css" %}"/>
+		<!--[if lte IE 9]><link rel="stylesheet" href="{% static "recommend/assets/css/ie9.css"%}" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="{% static "recommend/assets/css/ie8.css"%}" /><![endif]-->
+	</head>
+	<body>	
+	<!-- Footer -->
+		<section id="footer">
+			<div class="inner">
+				<h2 class="major">Steam Oracle</h2>
+				<p>
+				Get recommendations tailored to you from the tastes of people you neither know nor care about!</p>
+				<p>
+				Simply identify your profile via one of the input boxes below and press "GO!". Keep in mind however that the method used to rank games is biased towards cheap/popular/multiplayer games that most people have put a fair few hours into, such as Left 4 Dead 2.
+				</p>
+				<form method="post" action="{% url 'recommend:get_recommendations'%}" method="POST">{% csrf_token %}
+					<div class="field">
+						<label for="username">username</label>
+						<input type="text" name="username" id="username" placeholder="Custom URL here"/">
+					</div>
+					<div class="field">
+						<label for="steam_id">Steam ID</label>
+						<input type="text" name="steam_id" id="steam_id" placeholder="17 digit ID # here"/>
+					</div>
+					<ul class="actions">
+						<li><input type="submit" value="Go!"/></li>
+					</ul>
+				</form>
+				<p>By using this service, you give permission for your public steam information to be stored for use in future recommendations</p>
+				<ul class="copyright">
+					<li>&copy; David Buckley All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- Scripts -->
+		<script src="{% static "recommend/assets/js/skel.min.js" %}"></script>
+		<script src="{% static "recommend/assets/js/jquery.min.js" %}"></script>
+		<script src="{% static "recommend/assets/js/jquery.scrollex.min.js" %}"></script>
+		<script src="{% static "recommend/assets/js/util.js" %}"></script>
+		<!--[if lte IE 8]><script src="{% static "recommend/assets/js/ie/respond.min.js" %}"></script><![endif]-->
+		<script src="{% static "recommend/assets/js/main.js" %}"></script>
+	</body>
+</html>
