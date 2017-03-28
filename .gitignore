@@ -30,7 +30,7 @@
 *.sqlite
 *.sqlite3
 
-.key
+*.key
 
 # OS generated files #
 ######################
