@@ -30,6 +30,8 @@
 *.sqlite
 *.sqlite3
 
+.key
+
 # OS generated files #
 ######################
 .DS_Store

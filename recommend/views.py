@@ -19,7 +19,9 @@ def get_recommendations(request):
 		vanity_name = request.POST['username']
 		steam_id = request.POST['steam_id']
 
-		api_key = '8FB1EB0966A3A2F4E0BEABF0509E7E98'
+		with open('steam_api.key', 'r') as f:
+			api_key = f.read()
+			
 		steamAPI = steam.SteamAPI(api_key)
 
 		if vanity_name:
