@@ -50,16 +50,22 @@ def get_recommendations(request, steam_id=None):
 	elif request.method == 'GET':
 		user_profile = get_object_or_404(Profile, steam_id=steam_id)
 
+
+	count_tot = 0
+	count_query = 0
 	graph = defaultdict(int)
 	for game in set(user_profile.owned_games.all()) - set(user_profile.played_games.all()):
 		graph[game] = 0
 
 	for profile in Profile.objects.all():
 		similarity = user_profile.similarity(profile)
+		count_query += 1
 		for game in profile.liked_games.all():
+			count_tot += 1
 			if game in graph:
 				graph[game] += similarity
 
+	print(count_tot, count_query)
 	graph_sorted = [game for game, rank in sorted(graph.items(), key=operator.itemgetter(1), reverse=True)]
 	context = {
 		'ordered_recommendation_list': graph_sorted,
