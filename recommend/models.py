@@ -39,36 +39,8 @@ class Profile(models.Model):
 	games = models.ManyToManyField(Game_Entry, related_name='owned_games')
 
 	def similarity(self, profile):
-		'''I very much dislike this, it feels like it takes forever.
-		profile_liked_games = set(profile.liked_games.all())
-		self_liked_games = set(self.liked_games.all())
-
-		profile_played_games = set(profile.played_games.all())
-		self_played_games = set(self.played_games.all())
-
-		total_self = len(self_liked_games)
-		total_other = len(profile_liked_games)
-		total = total_self+total_other
-
-		diff_self = self_liked_games.difference(profile_liked_games)
-		diff_other = profile_liked_games.difference(self_liked_games)
-
-		if (len(diff_self) == len(self_liked_games)):
-			return 0 #Nothing in common
-
-		disagreements_self = 0 #Games that you like and they don't
-		for game in diff_self:
-			if game in profile_played_games:
-				disagreements_self += 1
-
-		disagreements_other = 0 #Games that they like and you don't
-		for game in diff_other:
-			if game in self_played_games:
-				disagreements_other += 1
-
-		disagreements = disagreements_self + disagreements_other
-		return (total-disagreements)/total'''
-
+		#Possible that I should do each of the below queries (in the actual string) separatly and take the common elements locally
+		#Less of the work on DB (bad), less work overall (good)
 		game_entry_query = """
 SELECT 
 	recommend_game_entry.id as id, 
@@ -81,6 +53,7 @@ INNER JOIN recommend_profile
 	ON recommend_profile.id == recommend_profile_games.profile_id
 WHERE 
 	recommend_profile.steam_id=%s AND
+	recommend_game_entry.score > 0 AND
 	recommend_game_entry.game_id IN (
 		SELECT 
 			recommend_game_entry.game_id
@@ -91,12 +64,22 @@ WHERE
 			ON recommend_profile.id == recommend_profile_games.profile_id
 		WHERE 
 			recommend_profile.steam_id=%s
-		)"""
+		)
+ORDER BY
+	recommend_game_entry.game_id"""
 
 		self_games = Game_Entry.objects.raw(game_entry_query, [self.steam_id, profile.steam_id])
 		profile_games = Game_Entry.objects.raw(game_entry_query, [profile.steam_id, self.steam_id])
+		similarity = 100
+		length = len(self_games)
+		adj = similarity/(length*9)
+		
+		similarity - adjustment*(len(self_games)*9) == 0
+		for game_self, game_profile in zip(self_games, profile_games):
+			diff = abs(game_self.score - game_profile.score)
+			similarity -= adj*diff
 
-		return 0.5
+		return similarity
 
 
 	def __str__(self):
