@@ -63,7 +63,8 @@ WHERE
 		INNER JOIN recommend_profile
 			ON recommend_profile.id == recommend_profile_games.profile_id
 		WHERE 
-			recommend_profile.steam_id=%s
+			recommend_profile.steam_id=%s AND
+			recommend_game_entry.score > 0
 		)
 ORDER BY
 	recommend_game_entry.game_id"""
