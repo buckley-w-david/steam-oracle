@@ -24,7 +24,7 @@ class Game_Entry(models.Model):
 		return '{}:{} score={}'.format(self.game.common_name, self.game.steam_id, self.score)
 
 	def __repr__(self):
-		return '{}:{}'.format(self.game.common_name, self.game.steam_id, self.score)
+		return '{}:{}'.format(self.game.common_name, self.game.steam_id)
 
 	def __hash__(self):
 		return hash(repr(self))
